@@ -8,22 +8,22 @@ function getHTML (options, callback) {
         // set encoding of received data to UTF-8
         options.setEncoding('utf8');
         if(options.statusCode !== 200 ){
-            printHTML("Request failed with status code" + options.statusCode);
+            callback("Request failed with status code" + options.statusCode);
         }
       
         // the callback is invoked when a `data` chunk is received
-        printHTML("I am runnning");
+        callback("I am runnning");
         options.on('data', function (data) {
             
             body += data;
-            printHTML(body);
+            callback(body);
           
         });
       
         // the callback is invoked when all of the data has been received
         // (the `end` of the stream)
         options.on('end', function() {
-          printHTML('Response stream complete.');
+          callback('Response stream complete.');
         });
       });
     
@@ -32,6 +32,7 @@ function getHTML (options, callback) {
   
   function printHTML (html) {
     console.log(html);
+    
   }
   
   var requestOptions = {
@@ -39,4 +40,4 @@ function getHTML (options, callback) {
     path: '/http-examples/step4.html'
   };
 
-  getHTML(requestOptions,printHTML());
+  getHTML(requestOptions,printHTML);
